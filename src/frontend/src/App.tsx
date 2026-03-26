@@ -2574,7 +2574,7 @@ function RegisterPage({ setView }: { setView: (v: View) => void }) {
 }
 
 // ─── Main App ─────────────────────────────────────────────────────────────────
-export default function App() {
+export function SmmPanel() {
   useEffect(() => {
     initStorage();
   }, []);
@@ -2729,5 +2729,49 @@ export default function App() {
         </div>
       </div>
     </>
+  );
+}
+
+import { ProtectedRoute } from "./components/ProtectedRoute";
+// ─── Auth Router ──────────────────────────────────────────────────────────────
+import { AuthProvider } from "./context/AuthContext";
+import { AdminDashboard as AuthAdminDashboard } from "./pages/AdminDashboard";
+import { LoginPage as AuthLoginPage } from "./pages/LoginPage";
+
+function AppRouter() {
+  const [path, setPath] = useState(window.location.pathname);
+
+  useEffect(() => {
+    const handler = () => setPath(window.location.pathname);
+    window.addEventListener("popstate", handler);
+    return () => window.removeEventListener("popstate", handler);
+  }, []);
+
+  if (path === "/login") {
+    return <AuthLoginPage />;
+  }
+
+  if (path === "/admin" || path.startsWith("/admin/")) {
+    return (
+      <ProtectedRoute>
+        <AuthAdminDashboard />
+      </ProtectedRoute>
+    );
+  }
+
+  // Default redirect to /admin
+  window.history.replaceState(null, "", "/admin");
+  return (
+    <ProtectedRoute>
+      <AuthAdminDashboard />
+    </ProtectedRoute>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppRouter />
+    </AuthProvider>
   );
 }

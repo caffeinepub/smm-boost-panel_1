@@ -8,10 +8,60 @@
 
 import { IDL } from '@icp-sdk/core/candid';
 
-export const idlService = IDL.Service({});
+export const Book = IDL.Record({
+  'title' : IDL.Text,
+  'content' : IDL.Text,
+  'isbn' : IDL.Nat,
+  'author' : IDL.Text,
+});
+export const UserRole = IDL.Variant({
+  'admin' : IDL.Null,
+  'user' : IDL.Null,
+  'guest' : IDL.Null,
+});
+
+export const idlService = IDL.Service({
+  '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+  'addBook' : IDL.Func([Book], [], []),
+  'addBookWithoutAuthor' : IDL.Func([IDL.Text, IDL.Text], [Book], []),
+  'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+  'banBook' : IDL.Func([IDL.Nat], [], []),
+  'deleteBook' : IDL.Func([IDL.Nat], [], []),
+  'getAllBooks' : IDL.Func([], [IDL.Vec(Book)], ['query']),
+  'getBannedBooks' : IDL.Func([], [IDL.Vec(IDL.Nat)], ['query']),
+  'getBook' : IDL.Func([IDL.Nat], [IDL.Opt(Book)], ['query']),
+  'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+  'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+});
 
 export const idlInitArgs = [];
 
-export const idlFactory = ({ IDL }) => { return IDL.Service({}); };
+export const idlFactory = ({ IDL }) => {
+  const Book = IDL.Record({
+    'title' : IDL.Text,
+    'content' : IDL.Text,
+    'isbn' : IDL.Nat,
+    'author' : IDL.Text,
+  });
+  const UserRole = IDL.Variant({
+    'admin' : IDL.Null,
+    'user' : IDL.Null,
+    'guest' : IDL.Null,
+  });
+  
+  return IDL.Service({
+    '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+    'addBook' : IDL.Func([Book], [], []),
+    'addBookWithoutAuthor' : IDL.Func([IDL.Text, IDL.Text], [Book], []),
+    'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+    'banBook' : IDL.Func([IDL.Nat], [], []),
+    'deleteBook' : IDL.Func([IDL.Nat], [], []),
+    'getAllBooks' : IDL.Func([], [IDL.Vec(Book)], ['query']),
+    'getBannedBooks' : IDL.Func([], [IDL.Vec(IDL.Nat)], ['query']),
+    'getBook' : IDL.Func([IDL.Nat], [IDL.Opt(Book)], ['query']),
+    'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+    'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+  });
+};
 
 export const init = ({ IDL }) => { return []; };
