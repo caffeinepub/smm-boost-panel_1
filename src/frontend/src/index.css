@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("/assets/fonts/BricolageGrotesque.woff2") format("woff2");
+  font-weight: 200 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/assets/fonts/PlusJakartaSans.woff2") format("woff2");
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+    --background: 0.098 0 0;
+    --foreground: 0.97 0 0;
+    --card: 0.13 0 0;
+    --card-foreground: 0.97 0 0;
+    --popover: 0.16 0 0;
+    --popover-foreground: 0.97 0 0;
+    --primary: 0.795 0.184 91.2;
+    --primary-foreground: 0.1 0 0;
+    --secondary: 0.2 0 0;
+    --secondary-foreground: 0.97 0 0;
+    --muted: 0.18 0 0;
+    --muted-foreground: 0.55 0 0;
+    --accent: 0.795 0.184 91.2;
+    --accent-foreground: 0.1 0 0;
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+    --border: 0.22 0 0;
+    --input: 0.22 0 0;
+    --ring: 0.795 0.184 91.2;
+    --chart-1: 0.795 0.184 91.2;
+    --chart-2: 0.6 0.118 184.704;
+    --chart-3: 0.488 0.243 264.376;
+    --chart-4: 0.627 0.265 303.9;
+    --chart-5: 0.645 0.246 16.439;
+    --sidebar: 0.11 0 0;
+    --sidebar-foreground: 0.97 0 0;
+    --sidebar-primary: 0.795 0.184 91.2;
+    --sidebar-primary-foreground: 0.1 0 0;
+    --sidebar-accent: 0.18 0 0;
+    --sidebar-accent-foreground: 0.97 0 0;
+    --sidebar-border: 0.22 0 0;
+    --sidebar-ring: 0.795 0.184 91.2;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Plus Jakarta Sans", "Inter", sans-serif;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Bricolage Grotesque", "Inter", sans-serif;
+  }
+}
+
+@layer components {
+  .sidebar-nav-item {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200;
+    @apply text-muted-foreground hover:text-foreground hover:bg-muted;
+  }
+  .sidebar-nav-item.active {
+    @apply bg-primary/10 text-primary;
+  }
+  .stat-card {
+    @apply bg-card border border-border rounded-xl p-5 flex flex-col gap-2;
+  }
+  .glow-yellow {
+    box-shadow: 0 0 20px oklch(0.795 0.184 91.2 / 0.2);
+  }
+  .glow-blue {
+    box-shadow: 0 0 20px oklch(0.6 0.118 184.704 / 0.3);
+  }
+}
